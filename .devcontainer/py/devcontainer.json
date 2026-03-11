@@ -1,0 +1,28 @@
+{
+  "name": "project (Python + Poetry)",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "py-dev",
+  "workspaceFolder": "/workspaces/project",
+  "shutdownAction": "stopCompose",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+	"ms-toolsai.jupyter",
+        "ms-python.black-formatter",
+        "charliermarsh.ruff",
+        "ms-azuretools.vscode-docker",
+        "GitHub.copilot"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/workspaces/project/.venv/bin/python",
+        "python.terminal.activateEnvironment": true
+      }
+    }
+  },
+
+  "postCreateCommand": "bash -lc 'if [ -f pyproject.toml ]; then poetry install; else echo \"No pyproject.toml found.\"; fi'"
+}
+

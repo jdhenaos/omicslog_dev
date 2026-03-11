@@ -1,0 +1,33 @@
+# VS Code
+.vscode/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Outputs
+results/
+data/**/processed/
+*.log
+
+# OS
+.DS_Store
+
+# Quarto
+.quarto/
+_quarto/
+_site/
+_freeze/
+
+.devcontainer/.env
+.env
+config/local.env

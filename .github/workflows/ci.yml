@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  r-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build R image
+        run: |
+          docker build -t project-r -f .devcontainer/r/Dockerfile .
+
+      - name: Run R smoke test (and restore if lock exists)
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspaces/project" \
+            -w /workspaces/project \
+            project-r \
+            bash -lc 'if [ -f renv.lock ]; then R -q -e "renv::restore(prompt=FALSE)"; fi; R -q -f analysis/r/smoke.R'
+
+  py-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Python image
+        run: |
+          docker build -t project-py -f .devcontainer/py/Dockerfile .
+
+      - name: Run Python smoke test (Poetry)
+        run: |
+          docker run --rm \
+            --user root \
+            -v "${{ github.workspace }}:/workspaces/project" \
+            -w /workspaces/project \
+            project-py \
+            bash -lc 'chown -R vscode:vscode /workspaces/project && poetry install && poetry run python analysis/py/smoke.py'
