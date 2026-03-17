@@ -1,6 +1,0 @@
-normalizing counts per cell
-    finished (0:00:00)
-normalizing counts per cell
-The following highly-expressed genes are not considered during normalization factor computation:
-['1', '3', '4']
-    finished (0:00:00)
